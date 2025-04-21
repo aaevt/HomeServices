@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package smarthome;
+
+service SensorService {
+    rpc GetAllSensors (Empty) returns (SensorList);
+    rpc GetSensorById (SensorId) returns (Sensor);
+    rpc CreateSensor (Sensor) returns (Sensor);
+    rpc UpdateSensor (Sensor) returns (Sensor);
+    rpc DeleteSensor (SensorId) returns (ResponseMessage);
+}
+
+message Empty {}
+
+message SensorId {
+    string id = 1;
+}
+
+message Sensor {
+    string id = 1;
+    string name = 2;
+    double data = 3;
+    bool status = 4;
+}
+
+message SensorList {
+    repeated Sensor sensors = 1;
+}
+
+message ResponseMessage {
+    string message = 1;
+}

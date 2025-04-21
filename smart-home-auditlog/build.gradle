@@ -1,0 +1,23 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.6'
+    id 'java'
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+group = 'com.sop.smarthome'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-amqp:2.7.6'
+    implementation 'org.springframework.boot:spring-boot-starter-logging:2.7.6'
+    implementation 'org.springframework.boot:spring-boot-starter:2.7.6'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation 'ch.qos.logback:logback-core:1.2.6'
+}

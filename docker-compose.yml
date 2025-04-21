@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  smart-home-core:
+    build:
+      context: ./smart-home-core
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+      - rabbitmq
+
+  smart-home-grpc-backend:
+    build:
+      context: ./smart-home-grpc-backend
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    depends_on:
+      - rabbitmq
+
+  smart-home-grpc-client:
+    build:
+      context: ./smart-home-grpc-client
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - smart-home-grpc-backend
+      - rabbitmq
+      
+  smart-home-notifier:
+    build:
+      context: ./smart-home-notifier
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - rabbitmq
+
+  smart-home-auditlog:
+    build:
+      context: ./smart-home-auditlog
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongo
+      - rabbitmq
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+volumes:
+  mongo_data:

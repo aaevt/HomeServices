@@ -1,0 +1,16 @@
+type Sensor {
+    id: ID!
+    name: String!
+    data: Float!
+    status: Boolean!
+}
+
+type Query {
+    sensors: [Sensor!]!
+    sensor(id: ID!): Sensor
+}
+
+type Mutation {
+    createSensor(name: String!, data: Float!, status: Boolean): Sensor!
+    deleteSensor(id: ID!): Boolean
+}
